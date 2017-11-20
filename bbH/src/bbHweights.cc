@@ -62,10 +62,12 @@ double bbHweights::weight(double higgsPt,
 
   output = weightLow + (weightHigh-weightLow)*(higgsMass-massLow)/(massHigh-massLow);
 
+  /*
   std::cout << "higgsMass = " << higgsMass << std::endl;
   std::cout << "higgsPt = " << higgsPt << std::endl;
   std::cout << "lower mass = " << massLow << "  higher mass = " << massHigh << std::endl;
   std::cout << "weight = " << output << std::endl;
+  */
 
   return output;
 
