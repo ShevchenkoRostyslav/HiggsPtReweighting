@@ -29,8 +29,6 @@ class bbHweights {
 
  private:
 
- TFile * file;
-
  double ptMin;
  double ptMax;
  int nBinsPtHist;
@@ -46,7 +44,6 @@ class bbHweights {
  const double massD[10] = {250,350,400,500,600,700,900,1000,1200,1400};
  std::vector<TH1D*> hists;
  std::vector<TH2D*> hists2D;
- std::map<double, TString> masses;
 
  TH1D * binning;
    

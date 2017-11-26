@@ -2,7 +2,7 @@
 
 bbHweights::bbHweights(TString fileName) {
 
-  file = new TFile(fileName);
+  TFile file(fileName);
 
   ptMin = 0;
   ptMax = 600;
@@ -15,13 +15,14 @@ bbHweights::bbHweights(TString fileName) {
     else
       sprintf(massC,"%4i",int(massD[iM]+0.2));
     TString massStr(massC); 
-    masses.insert(std::pair<double,TString>(massD[iM],massStr));
-    TH1D * hist = (TH1D*)file->Get("higgsPt_"+massStr);
+
+    TH1D * hist = (TH1D*)file.Get("higgsPt_"+massStr);
     hists.push_back(hist);
     nBinsPtHist = hist->GetNbinsX();
     ptMin = hist->GetXaxis()->GetBinCenter(1);
     ptMax = hist->GetXaxis()->GetBinCenter(nBinsPtHist);
-    TH2D * hist2D = (TH2D*)file->Get("2D_"+massStr);
+
+    TH2D * hist2D = (TH2D*)file.Get("2D_"+massStr);
     hists2D.push_back(hist2D);
     nBinsPtHistX = hist2D->GetNbinsX();
     ptMinX = hist2D->GetXaxis()->GetBinCenter(1);
