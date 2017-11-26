@@ -23,6 +23,10 @@ class bbHweights {
  double weight(double higgsPt, 
 	       double higgsMass);
 
+ double weight2D(double higgsPt, 
+		 double higgsMass,
+		 double bquarkPt);
+
  private:
 
  TFile * file;
@@ -31,8 +35,17 @@ class bbHweights {
  double ptMax;
  int nBinsPtHist;
 
+ double ptMinY;
+ double ptMaxY;
+ int nBinsPtHistY;
+
+ double ptMinX;
+ double ptMaxX;
+ int nBinsPtHistX;
+
  const double massD[10] = {250,350,400,500,600,700,900,1000,1200,1400};
  std::vector<TH1D*> hists;
+ std::vector<TH2D*> hists2D;
  std::map<double, TString> masses;
 
  TH1D * binning;
