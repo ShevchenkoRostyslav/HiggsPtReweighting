@@ -23,6 +23,12 @@ bbHweights * higgsPtWeight = new bbHweights(fullPath);
 
 // getting weight
 
-// inputs : double higgsPt, double higgsMass
+// inputs : double higgsPt, double higgsMass, double bquarkPt
 
-double weight = higgsPtWeight->weight(higgsPt,higgsMass);
+// for higgsMass take nominal mass of the Higgs (corresponding to a given processed sample)
+
+// for higgsPt take Higgs boson (pdgId = 36 in PY8 samples) from PYTHIA particle list with status flag 62
+
+// for bquarkPt take the leading (higher pT) b/b~ quark with status flag 71
+ 
+double weight = higgsPtWeight->weight2D(higgsPt,higgsMass,bquarkPt);
