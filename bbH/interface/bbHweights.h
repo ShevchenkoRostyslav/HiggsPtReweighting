@@ -41,7 +41,7 @@ class bbHweights {
  double ptMaxX;
  int nBinsPtHistX;
 
- const double massD[10] = {250,350,400,500,600,700,900,1000,1200,1400};
+ const vector<double> massD = {250,350,400,500,600,700,900,1000,1200,1400};
  std::vector<TH1D*> hists;
  std::vector<TH2D*> hists2D;
 

@@ -8,13 +8,8 @@ bbHweights::bbHweights(TString fileName) {
   ptMax = 600;
   nBinsPtHist = 14;
 
-  for (int iM=0; iM<10; ++iM) {
-    char massC[4];
-    if (massD[iM]<999) 
-      sprintf(massC,"%3i",int(massD[iM]+0.2));
-    else
-      sprintf(massC,"%4i",int(massD[iM]+0.2));
-    TString massStr(massC); 
+  for (const auto& iM : massD) {
+    TString massStr(int(iM));
 
     TH1D * hist = (TH1D*)file.Get("higgsPt_"+massStr);
     hists.push_back(hist);
@@ -31,8 +26,8 @@ bbHweights::bbHweights(TString fileName) {
     ptMinY = hist2D->GetYaxis()->GetBinCenter(1);
     ptMaxY = hist2D->GetYaxis()->GetBinCenter(nBinsPtHistY);
   }
-  int nBins = 9;
-  binning = new TH1D("binning","",nBins,massD);
+  int nBins = massD.size() + 1;
+  binning = new TH1D("binning","",nBins,&massD[0]);
 
 }
 
@@ -45,7 +40,7 @@ double bbHweights::weight(double higgsPt,
 
   double output = 1;
 
-  if (higgsMass>massD[9]) higgsMass = massD[9] - 1;
+  if (higgsMass>massD.back()) higgsMass = massD.back() - 1;
   if (higgsMass<massD[0]) higgsMass = massD[0] + 1;
 
   int massBin = binning->FindBin(higgsMass) - 1;
@@ -57,7 +52,7 @@ double bbHweights::weight(double higgsPt,
   double weightLow = 1;
   double weightHigh  = 1;
 
-  if (higgsPt>ptMax) { 
+  if (higgsPt>ptMax) {
     weightLow = histLow->GetBinContent(nBinsPtHist);
     weightHigh = histHigh->GetBinContent(nBinsPtHist);
   }
@@ -89,7 +84,7 @@ double bbHweights::weight2D(double higgsPt,
 
   double output = 1;
 
-  if (higgsMass>massD[9]) higgsMass = massD[9] - 1;
+  if (higgsMass>massD.back()) higgsMass = massD.back() - 1;
   if (higgsMass<massD[0]) higgsMass = massD[0] + 1;
 
   int massBin = binning->FindBin(higgsMass) - 1;
