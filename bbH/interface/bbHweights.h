@@ -20,20 +20,20 @@ class bbHweights {
  bbHweights(TString fileName);
  ~bbHweights();
 
- double weight(double higgsPt, 
+ double weight(const double& higgsPt,
 	       double higgsMass);
 
- double weight2D(double higgsPt, 
+ double weight2D(const double& higgsPt,
 		 double higgsMass,
-		 double bquarkPt);
+		 const double& bquarkPt);
 
  private:
 
- TFile * file;
+ void Read1DWeights_();
+ void Read2DWeights_();
 
- double ptMin;
- double ptMax;
- int nBinsPtHist;
+ TString pathToFile_;
+ bool done_{false};
 
  double ptMinY;
  double ptMaxY;
@@ -43,10 +43,9 @@ class bbHweights {
  double ptMaxX;
  int nBinsPtHistX;
 
- const double massD[10] = {250,350,400,500,600,700,900,1000,1200,1400};
+ const std::vector<double> massD {250,350,400,500,600,700,900,1000,1200,1400};
  std::vector<TH1D*> hists;
  std::vector<TH2D*> hists2D;
- std::map<double, TString> masses;
 
  TH1D * binning;
    
