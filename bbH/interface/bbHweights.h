@@ -33,7 +33,8 @@ class bbHweights {
  void Read2DWeights_();
 
  TString pathToFile_;
- bool done_{false};
+ bool done1D_{false};
+ bool done2D_{false};
 
  double ptMinY;
  double ptMaxY;

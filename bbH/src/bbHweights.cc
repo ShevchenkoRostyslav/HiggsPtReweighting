@@ -1,6 +1,6 @@
 #include "HiggsPtReweighting/bbH/interface/bbHweights.h"
 
-bbHweights::bbHweights(TString fileName) : pathToFile_(fileName), done_(false) {
+bbHweights::bbHweights(TString fileName) : pathToFile_(fileName), done1D_(false), done2D_(false) {
 
 }
 
@@ -28,7 +28,7 @@ void bbHweights::Read1DWeights_(){
 	int nBins = massD.size() - 1;
 	binning = new TH1D("binning","",nBins,&massD[0]);
 
-	done_ = true;
+	done1D_ = true;
 }
 
 void bbHweights::Read2DWeights_(){
@@ -54,14 +54,14 @@ void bbHweights::Read2DWeights_(){
 	int nBins = massD.size() - 1;
 	binning = new TH1D("binning","",nBins,&massD[0]);
 
-	done_ = true;
+	done2D_ = true;
 
 }
 
 double bbHweights::weight(const double& higgsPt,
 			  double higgsMass) {
 
-	if(!done_) Read1DWeights_();
+  if(!done1D_) Read1DWeights_();
 
   double output = 1;
 
@@ -107,7 +107,7 @@ double bbHweights::weight2D(const double& higgsPt,
 			    double higgsMass,
 			    const double& bquarkPt) {
 
-	if(!done_) Read2DWeights_();
+  if(!done2D_) Read2DWeights_();
   double output = 1;
 
   if (higgsMass>massD.back()) higgsMass = massD.back() - 1;
@@ -129,8 +129,8 @@ double bbHweights::weight2D(const double& higgsPt,
   if (y>ptMaxY) y = ptMaxY - 0.1;
   if (y<ptMinY) y = ptMinY + 0.1;
 
-  weightLow = histLow->Interpolate(x,y);
-  weightHigh = histHigh->Interpolate(x,y);
+  weightLow = histLow->GetBinContent(histLow->FindBin(x,y));
+  weightHigh = histHigh->GetBinContent(histHigh->FindBin(x,y));
 
 
   output = weightLow + (weightHigh-weightLow)*(higgsMass-massLow)/(massHigh-massLow);
